@@ -1,0 +1,101 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-soft);
+  position: relative;
+  z-index: 10;
+}
+
+.app-brand {
+  /* font-weight: bold; */
+  /* font-family: "Times New Roman", Times, serif; */
+  cursor: pointer;
+}
+.app-brand #calc {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--blue);
+}
+.app-brand #pro {
+  color: white;
+  font-size: x-small;
+}
+
+.menu-wrapper {
+  position: relative;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: row;
+  gap: clamp(10px, calc(2vw + 5px), 30px);
+}
+
+.menu-wrapper .tabBtn {
+  background: #ffffff14;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid var(--border-default);
+  font-size: 20px;
+  text-align: center;
+  color: var(--blue);
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.menu-wrapper .tabBtn:hover {
+  background: transparent;
+}
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-white);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menu-toggle:hover {
+  background: var(--bg-hover);
+}
+
+.app-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 230px;
+  min-height: 300px;
+  /* padding: 6px; */
+  background: #00000052;
+  border: 0.5px solid #80808089;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px #24080855;
+  backdrop-filter: blur(15px);
+}
+
+.app-menu button {
+  font-size: 15px;
+  display: block;
+  width: 100%;
+  padding: 15px 11px;
+  border: none;
+  border-bottom: 1px solid #80808089;
+  background: transparent;
+  color: var(--text-white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.app-menu button:hover {
+  color: var(--blue);
+}
+
+[hidden] {
+  display: none !important;
+}

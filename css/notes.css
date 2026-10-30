@@ -1,0 +1,345 @@
+/* ===============================
+   NOTES PANEL
+   =============================== */
+
+.feature-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.feature-panel[hidden] {
+  display: none !important;
+}
+
+/* ===============================
+   MAIN MODAL
+   =============================== */
+
+.panel-card.notes-card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 650px;
+
+  height: 650px;
+  max-height: calc(100vh - 40px);
+
+  padding: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  background: var(--bg-surface);
+  color: var(--text-main);
+
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+}
+
+/* ===============================
+   HEADER
+   =============================== */
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;
+
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.panel-heading button {
+  flex-shrink: 0;
+
+  background: transparent;
+  border: none;
+
+  color: var(--text-white);
+  font-size: 22px;
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.panel-heading button:hover {
+  color: var(--red);
+}
+
+/* ===============================
+   NOTE COMPOSER
+   =============================== */
+
+.notes-composer {
+  flex-shrink: 0;
+  padding-top: 16px;
+}
+
+/* Fixed Textarea */
+
+#noteInput {
+  display: block;
+
+  width: 100%;
+  height: 110px;
+  min-height: 110px;
+  max-height: 110px;
+
+  margin: 0 0 12px;
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  resize: none;
+  overflow-y: auto;
+
+  background: var(--bg-main);
+  color: var(--text-white);
+
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+
+  font: inherit;
+  line-height: 1.5;
+
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#noteInput:focus {
+  border-color: var(--blue);
+}
+
+#noteInput::placeholder {
+  color: #888;
+}
+
+/* Save Button */
+
+#saveNote {
+  display: block;
+
+  width: 100%;
+  padding: 11px;
+
+  border: 1px solid var(--green);
+  border-radius: 8px;
+
+  background: var(--green);
+  color: white;
+
+  font-weight: bold;
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+#saveNote:hover {
+  filter: brightness(1.1);
+}
+
+#saveNote:active {
+  transform: scale(0.99);
+}
+
+/* ===============================
+   SAVED NOTES CONTAINER
+   =============================== */
+
+.notes-list-container {
+  flex: 1;
+  min-height: 0;
+
+  margin-top: 20px;
+  padding-right: 5px;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-hover) transparent;
+}
+
+.notes-list-container h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+/* Custom Scrollbar */
+
+.notes-list-container::-webkit-scrollbar,
+#noteInput::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notes-list-container::-webkit-scrollbar-track,
+#noteInput::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notes-list-container::-webkit-scrollbar-thumb,
+#noteInput::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 10px;
+}
+
+/* ===============================
+   NOTES LIST
+   =============================== */
+
+#notesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual Note */
+
+#notesList li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 14px;
+
+  background: var(--bg-main);
+  border: 1px solid var(--border-default);
+  border-radius: 9px;
+
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+
+  transition: border-color 0.2s ease;
+}
+
+#notesList li:hover {
+  border-color: var(--blue);
+}
+
+/* Note Text */
+
+#notesList li .note-text {
+  flex: 1;
+  min-width: 0;
+
+  color: var(--text-main);
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+/* ===============================
+   DELETE BUTTON
+   =============================== */
+
+#notesList li .delete-note {
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  padding: 6px 10px;
+
+  color: #ff6b6b;
+  background: rgba(255, 70, 70, 0.1);
+
+  border: 1px solid rgba(255, 70, 70, 0.45);
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+#notesList li .delete-note:hover {
+  background: rgba(255, 70, 70, 0.2);
+  border-color: rgba(255, 70, 70, 0.8);
+}
+
+#notesList li .delete-note:active {
+  transform: scale(0.96);
+}
+
+#notesList li .delete-note:focus-visible {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 3px;
+}
+
+/* ===============================
+   SMALL SCREENS
+   =============================== */
+
+@media (max-width: 480px) {
+  .feature-panel {
+    padding: 12px;
+  }
+
+  .panel-card.notes-card {
+    width: 100%;
+    max-width: 100%;
+
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+
+    padding: 16px;
+
+    border-radius: 12px;
+  }
+
+  .panel-heading h2 {
+    font-size: 19px;
+  }
+
+  #noteInput {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  .notes-list-container {
+    margin-top: 16px;
+  }
+
+  #notesList {
+    gap: 9px;
+  }
+
+  #notesList li {
+    padding: 11px;
+    gap: 8px;
+  }
+}

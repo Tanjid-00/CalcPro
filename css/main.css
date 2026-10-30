@@ -1,0 +1,533 @@
+/* =========================================
+   1. COLOR VARIABLES — SINGLE SOURCE OF TRUTH
+   ========================================= */
+
+:root {
+  /* Background */
+  --bg-main: #121212;
+  --bg-surface: #1e1e1e;
+  --bg-muted: #3a3a3a;
+  --bg-hover: #555555;
+
+  /* Text */
+  --text-main: #f0f0f0;
+  --text-white: #ffffff;
+  --text-muted: #aaaaaa;
+
+  /* Borders */
+  --border-soft: #333333;
+  --border-default: #444444;
+
+  /* Accent colors */
+  --green: #3498db;
+  --red: #dc2626;
+  --blue: #0ec551;
+
+  /* Tables */
+  --table-head: #17597c48;
+
+  /* Shared UI */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+
+  --transition-fast: 0.2s ease;
+}
+
+/* =========================================
+   2. GLOBAL RESET
+   ========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h2,
+h3 {
+  /* color: rgb(255, 255, 80); */
+  margin: 10px 0;
+  text-align: center;
+  color: var(--text-white);
+}
+
+.app-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* gap: px; */
+}
+#logo {
+  width: 29px;
+  margin-right: 5px;
+}
+/* =========================================
+   3. MAIN LAYOUT
+   ========================================= */
+
+.container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 60px);
+  gap: 1rem;
+  padding: 10px;
+}
+
+.left {
+  flex: 0 0 30%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-right: 2px solid var(--border-soft);
+  overflow-y: auto;
+}
+
+.right {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+/* =========================================
+   4. INPUT FIELDS
+   ========================================= */
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+
+  font-size: 15px;
+  font-family: inherit;
+
+  color: var(--text-white);
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--green) 20%, transparent);
+}
+
+/* =========================================
+   5. TRANSACTION INPUT — NAME + CD/CW
+   ========================================= */
+
+.transaction-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Name input */
+.transaction-controls .name-input {
+  flex: 1 1 150px;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+
+/* CD/CW container */
+.transaction-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Radio option card */
+.transaction-type .type-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 0;
+  padding: 10px 14px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+/* Hide the native radio without disabling keyboard access */
+.type-option input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Custom radio circle */
+.type-option .radio-custom {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid currentColor;
+  border-radius: 50%;
+
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+/* Selected radio */
+.type-option input[type="radio"]:checked + .radio-custom {
+  background: currentColor;
+  box-shadow: inset 0 0 0 4px var(--bg-surface);
+}
+
+/* Keyboard focus */
+.type-option input[type="radio"]:focus-visible + .radio-custom {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* CD — Green */
+.deposit-option {
+  color: var(--green);
+}
+
+.deposit-option:has(input[type="radio"]:checked) {
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  border-color: var(--green);
+}
+
+/* CW — Red */
+.withdraw-option {
+  color: var(--red);
+}
+
+.withdraw-option:has(input[type="radio"]:checked) {
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  border-color: var(--red);
+}
+
+/* Hover effects */
+.deposit-option:hover {
+  background: color-mix(in srgb, var(--green) 10%, var(--bg-surface));
+}
+
+.withdraw-option:hover {
+  background: color-mix(in srgb, var(--red) 10%, var(--bg-surface));
+}
+
+/* =========================================
+   6. BUTTONS — SHARED STYLE
+   ========================================= */
+
+.buttons button {
+  margin: 5px;
+  padding: 10px 20px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-white);
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* Generic button hover */
+.buttons button:hover {
+  background: var(--bg-hover);
+}
+
+/* Keyboard focus */
+.buttons button:focus-visible {
+  outline: 2px solid var(--text-white);
+  outline-offset: 3px;
+}
+
+/* Optional pressed feedback */
+.buttons button:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   7. SAVE BUTTON — GREEN
+   ========================================= */
+
+#saveBtn {
+  border-color: color-mix(in srgb, var(--green) 80%, transparent);
+  background: color-mix(in srgb, var(--green) 20%, transparent);
+}
+
+#saveBtn:hover {
+  background: color-mix(in srgb, var(--green) 40%, transparent);
+  border-color: var(--green);
+}
+
+/* =========================================
+   8. DOWNLOAD BUTTON — BLUE
+   ========================================= */
+
+#downloadBtn {
+  border-color: color-mix(in srgb, var(--blue) 80%, transparent);
+  background: color-mix(in srgb, var(--blue) 20%, transparent);
+}
+
+#downloadBtn:hover {
+  background: color-mix(in srgb, var(--blue) 40%, transparent);
+  border-color: var(--blue);
+}
+
+/* =========================================
+   9. DELETE ALL BUTTON — RED
+   ========================================= */
+
+#deleteAllBtn {
+  border-color: color-mix(in srgb, var(--red) 80%, transparent);
+  background: color-mix(in srgb, var(--red) 20%, transparent);
+}
+
+#deleteAllBtn:hover {
+  background: color-mix(in srgb, var(--red) 40%, transparent);
+  border-color: var(--red);
+}
+
+/* Individual row delete button */
+.deleteBtn {
+  /* padding: 4px 8px; */
+  color: var(--red);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  /* height: 100%; */
+  font-size: 15px;
+}
+
+.deleteBtn:hover {
+  color: var(--text-white);
+  background: color-mix(in srgb, var(--red) 20%, transparent);
+}
+
+/* Action area */
+.action {
+  background: color-mix(in srgb, var(--red) 14%, transparent);
+  /* max-width: 10px; */
+  width: 40px;
+}
+#index {
+  width: 40px;
+}
+#name {
+  width: calc(150px);
+}
+#total {
+  /* text-align: left; */
+  width: calc(120px);
+}
+.totalMoney {
+  text-align: right;
+  padding: 0 20px 0 0;
+  color: #fada8a;
+  text-shadow: 0 0 5px #f8cf1859;
+}
+#grandTotal {
+  color: #fada8a;
+  text-shadow: 0 0 5px #f8cf1859;
+}
+#type {
+  width: 40px;
+}
+#typeCol {
+  font-size: smaller;
+}
+
+/* =========================================
+   10. TABLES
+   ========================================= */
+
+table {
+  border-collapse: collapse;
+  margin: 15px 0;
+
+  background: var(--bg-surface);
+  color: var(--text-main);
+
+  table-layout: fixed;
+}
+
+#dataTable {
+  width: 100%;
+}
+
+table th,
+table td {
+  padding: 5px;
+  text-align: center;
+
+  border: 1px solid var(--border-default);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table th {
+  background: var(--table-head);
+  font-weight: bold;
+}
+
+#dataTable thead {
+  color: var(--text-white);
+}
+
+/* Left-side table column widths */
+/* .left table thead th:nth-child(1),
+.left table tbody td:nth-child(1),
+.left table tfoot td:nth-child(1),
+.left table thead th:nth-child(2),
+.left table tbody td:nth-child(2),
+.left table tfoot td:nth-child(2) {
+  width: 150px;
+}
+
+.left table thead th:nth-child(3),
+.left table tbody td:nth-child(3),
+.left table tfoot td:nth-child(3) {
+  width: auto;
+} */
+
+/* Left-side table column widths */
+.left table th:nth-child(1),
+.left table td:nth-child(1) {
+  width: 40px;
+}
+
+.left table th:nth-child(2),
+.left table td:nth-child(2) {
+  width: 150px;
+}
+/* Table row hover */
+#dataTable tbody tr:hover {
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+}
+
+/* Name column alignment */
+#dataTable tbody td.nameCol {
+  text-align: left;
+  padding-left: 10px;
+}
+
+/* =========================================
+   11. RESPONSIVE LAYOUT
+   ========================================= */
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left,
+  .right {
+    flex: 1 1 100%;
+    min-width: 0;
+    border-right: none;
+  }
+
+  .left {
+    margin-bottom: 20px;
+  }
+  #name {
+    width: fit-content;
+  }
+
+  #total {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-controls {
+    align-items: stretch;
+  }
+
+  .transaction-controls .name-input {
+    flex-basis: 100%;
+  }
+
+  .transaction-type {
+    justify-content: flex-start;
+  }
+
+  .transaction-type .type-option {
+    padding: 10px 12px;
+  }
+
+  .buttons button {
+    margin: 4px 2px;
+    padding: 10px 12px;
+  }
+}
+
+/* Transaction Type Colors */
+
+/* CW — Red */
+#dataTable .type-cw {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* CD — Green */
+#dataTable .type-cd {
+  color: var(--green);
+  font-weight: 700;
+}
